@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101828">
+<title>Examiqo — NEET Test Hub</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#172033;--muted:#667085;--brand:#6257e8;--brand2:#4338ca;--line:#e5e9f2;--white:#fff;--green:#159947;--red:#d92d20}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#101828;color:#fff;padding:18px max(18px,calc((100% - 1080px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-size:1.35rem;font-weight:850;letter-spacing:-.6px}.logo span{color:#a8a2ff}.pill{font-size:.78rem;padding:6px 10px;border:1px solid #475467;border-radius:999px;color:#e4e7ec}
+main{max-width:1080px;margin:auto;padding:26px 16px 56px}.hero{padding:24px 0 20px}.eyebrow{color:var(--brand);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;font-size:.75rem}
+h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.05;margin:9px 0 12px;letter-spacing:-1.5px}.hero p{color:var(--muted);max-width:640px;line-height:1.65}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 22px #10182808}
+.card h2{font-size:1.1rem;margin:0 0 8px}.card p,.hint{font-size:.92rem;color:var(--muted);line-height:1.55}
+.icon{font-size:1.45rem;margin-bottom:12px}label{display:block;font-size:.9rem;font-weight:700;margin:14px 0 7px}
+input,select,textarea{width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:11px 12px;font:inherit;background:white;color:var(--ink)}input[type=file]{padding:9px}
+button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer;background:var(--brand);color:white}button:hover{background:var(--brand2)}button.secondary{background:#eef0ff;color:#3730a3}button.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}.status{font-size:.88rem;color:var(--muted);margin-top:10px;white-space:pre-wrap}
+.wide{grid-column:1/-1}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.feature{padding:15px;border:1px solid var(--line);background:#fff;border-radius:14px}.feature b{display:block;margin-bottom:5px}.feature small{color:var(--muted);line-height:1.4}
+#testArea{display:none;margin-top:18px}.testtop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.timer{font-weight:850;color:var(--red);font-variant-numeric:tabular-nums}.question{font-size:1.12rem;font-weight:750;line-height:1.5;margin:18px 0}.option{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:12px;margin:9px 0;cursor:pointer;background:#fff}.option input{width:auto;margin-top:4px}.option:has(input:checked){border-color:var(--brand);background:#f5f4ff}.palette{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.palette button{padding:8px 11px;background:#f2f4f7;color:#344054;border:1px solid #d0d5dd}.palette button.done{background:#dcfae6;border-color:#75e0a7}.palette button.current{outline:2px solid var(--brand)}.result{background:#f0fdf4;border:1px solid #abefc6;padding:14px;border-radius:12px;margin-top:14px;line-height:1.6}
+footer{text-align:center;color:var(--muted);padding:24px 16px;font-size:.85rem}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.features{grid-template-columns:1fr}.card{padding:17px}header{padding:15px 16px}}
+</style>
+</head>
+<body>
+<header><div class="logo">Exami<span>qo</span></div><div class="pill">NEET Test Hub · Beta</div></header>
+<main>
+<section class="hero">
+<div class="eyebrow">Practice smart. Perform better.</div>
+<h1>Your practice.<br> Your progress.</h1>
+<p>Build practice tests from your study material, practise MCQs, and review your mistakes. Designed for NEET aspirants on mobile, tablet and desktop.</p>
+<div class="features">
+<div class="feature"><b>📄 PDF workspace</b><small>Choose a PDF and try extracting its text in this prototype.</small></div>
+<div class="feature"><b>⏱️ Test mode</b><small>Timer, question navigation and instant scoring.</small></div>
+<div class="feature"><b>📈 Review mistakes</b><small>See correct answers after submitting your practice test.</small></div>
+</div>
+</section>
+<div class="grid">
+<section class="card">
+<div class="icon">📄</div><h2>Upload study PDF</h2>
+<p>Select a PDF from your device. This demo reads text-based PDFs in your browser; scanned/image PDFs may need OCR. Your file is not uploaded to a server by this prototype.</p>
+<label for="pdfFile">Choose PDF</label><input id="pdfFile" type="file" accept="application/pdf">
+<div class="row"><button id="readPdf">Read PDF text</button><button class="secondary" id="clearPdf">Clear</button></div>
+<div class="status" id="pdfStatus">No PDF selected.</div>
+<textarea id="pdfText" rows="5" placeholder="Extracted text will appear here…" aria-label="Extracted PDF text"></textarea>
+<div class="hint">Note: automatic MCQ extraction and AI-generated questions require a later backend/API integration. This prototype does not claim to do those yet.</div>
+</section>
+<section class="card">
+<div class="icon">🧪</div><h2>Create a practice test</h2>
+<p>Try a sample NEET-style quiz interface. Choose the language and number of questions.</p>
+<label for="language">Language</label><select id="language"><option value="en">English</option><option value="hi">हिंदी</option><option value="bi">Bilingual</option></select>
+<label for="count">Number of questions</label><select id="count"><option value="5">5 questions</option><option value="10">10 questions</option></select>
+<label for="minutes">Time limit</label><select id="minutes"><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option></select>
+<div class="row"><button id="startTest">Start sample test</button><button class="ghost" id="resetTest">Reset</button></div>
+<div class="hint">Sample questions are included for interface testing. They are not generated from your uploaded PDF.</div>
+</section>
+<section class="card wide" id="testArea">
+<div class="testtop"><div><b id="progress">Question 1 of 5</b><div class="hint">Select one answer, then move between questions.</div></div><div class="timer" id="timer">05:00</div></div>
+<div id="questionText" class="question"></div><div id="options"></div>
+<div class="row"><button class="ghost" id="prev">← Previous</button><button id="next">Next →</button><button class="secondary" id="mark">Mark for review</button><button id="submit">Submit test</button></div>
+<div class="hint">Question palette: grey = unanswered, green = answered, purple outline = current question.</div>
+<div class="palette" id="palette"></div><div id="result"></div>
+</section>
+</div>
+</main>
+<footer>Examiqo · Independent practice prototype · Not affiliated with NTA</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}
+const $=id=>document.getElementById(id);
+$('readPdf').addEventListener('click',async()=>{
+ const f=$('pdfFile').files[0]; if(!f){$('pdfStatus').textContent='Please choose a PDF first.';return}
+ if(!window.pdfjsLib){$('pdfStatus').textContent='PDF reader library could not load. Check internet connection and retry.';return}
+ $('pdfStatus').textContent='Reading PDF in your browser…'; $('pdfText').value='';
+ try{
+  const data=new Uint8Array(await f.arrayBuffer()); const pdf=await pdfjsLib.getDocument({data}).promise; let all='';
+  for(let p=1;p<=pdf.numPages;p++){const page=await pdf.getPage(p);const c=await page.getTextContent();all+=`\\n--- Page ${p} ---\\n`+c.items.map(x=>x.str).join(' ')+'\\n';}
+  $('pdfText').value=all; $('pdfStatus').textContent=`Read ${pdf.numPages} page(s). Text extracted locally.`;
+ }catch(e){$('pdfStatus').textContent='Could not read this PDF. It may be scanned, protected, or invalid.'}
+});
+$('clearPdf').onclick=()=>{$('pdfFile').value='';$('pdfText').value='';$('pdfStatus').textContent='No PDF selected.'};
+const qs=[
+{en:'Which organelle is the main site of aerobic respiration in eukaryotic cells?',hi:'यूकैरियोटिक कोशिकाओं में वायवीय श्वसन का मुख्य स्थल कौन-सा कोशिकांग है?',o:['Ribosome / राइबोसोम','Mitochondrion / माइटोकॉन्ड्रिया','Golgi apparatus / गॉल्जी तंत्र','Lysosome / लाइसोसोम'],a:1,why:'Mitochondria contain the machinery for most aerobic ATP production.'},
+{en:'The SI unit of force is:',hi:'बल का SI मात्रक है:',o:['Joule / जूल','Watt / वाट','Newton / न्यूटन','Pascal / पास्कल'],a:2,why:'Force is measured in newtons (N).'},
+{en:'The pH of a neutral aqueous solution at 25°C is approximately:',hi:'25°C पर उदासीन जलीय विलयन का pH लगभग कितना होता है?',o:['1','5','7','14'],a:2,why:'At 25°C, a neutral aqueous solution has pH 7.'},
+{en:'Which blood cells primarily transport oxygen?',hi:'कौन-सी रक्त कोशिकाएँ मुख्यतः ऑक्सीजन का परिवहन करती हैं?',o:['Platelets / प्लेटलेट्स','Red blood cells / लाल रक्त कोशिकाएँ','White blood cells / श्वेत रक्त कोशिकाएँ','Plasma cells / प्लाज़्मा कोशिकाएँ'],a:1,why:'Haemoglobin in red blood cells binds oxygen.'},
+{en:'For a uniform velocity, acceleration is:',hi:'एकसमान वेग के लिए त्वरण होता है:',o:['Zero / शून्य','Constant but non-zero / स्थिर लेकिन अशून्य','Increasing / बढ़ता हुआ','Always negative / हमेशा ऋणात्मक'],a:0,why:'Acceleration is the rate of change of velocity; unchanged velocity means zero acceleration.'},
+{en:'Which of the following is a strong acid in water?',hi:'निम्नलिखित में से कौन जल में प्रबल अम्ल है?',o:['HCl / HCl','CH₃COOH / CH₃COOH','H₂CO₃ / H₂CO₃','H₂O / H₂O'],a:0,why:'Hydrochloric acid ionizes essentially completely in dilute aqueous solution.'},
+{en:'The functional unit of the kidney is:',hi:'वृक्क की क्रियात्मक इकाई है:',o:['Neuron / न्यूरॉन','Nephron / नेफ्रॉन','Alveolus / वायुकोष्ठिका','Villus / विलस'],a:1,why:'The nephron filters blood and forms urine.'},
+{en:'A covalent bond is formed mainly by:',hi:'सहसंयोजक बंध मुख्यतः किससे बनता है?',o:['Transfer of protons / प्रोटॉन स्थानांतरण','Sharing of electron pairs / इलेक्ट्रॉन युग्मों की साझेदारी','Loss of neutrons / न्यूट्रॉन का ह्रास','Nuclear fusion / नाभिकीय संलयन'],a:1,why:'Covalent bonding involves sharing electron pairs.'},
+{en:'Which plant tissue transports water mainly from roots to leaves?',hi:'कौन-सा पादप ऊतक मुख्यतः जड़ों से पत्तियों तक जल पहुँचाता है?',o:['Phloem / फ्लोएम','Xylem / जाइलम','Epidermis / एपिडर्मिस','Cork / कॉर्क'],a:1,why:'Xylem conducts water and dissolved minerals.'},
+{en:'The approximate value of acceleration due to gravity near Earth’s surface is:',hi:'पृथ्वी की सतह के निकट गुरुत्वीय त्वरण का लगभग मान है:',o:['0.98 m/s²','9.8 m/s²','98 m/s²','980 m/s²'],a:1,why:'Near Earth’s surface, g is approximately 9.8 m/s².'}
+];
+let active=[],idx=0,answers={},marked={},seconds=300,tick=null,submitted=false;
+function langText(q){const l=$('language').value;return l==='hi'?q.hi:l==='bi'?q.en+'\\n'+q.hi:q.en}
+function render(){
+ const q=active[idx];$('progress').textContent=`Question ${idx+1} of ${active.length}`;$('questionText').textContent=langText(q);$('options').innerHTML='';
+ q.o.forEach((op,i)=>{let lab=document.createElement('label');lab.className='option';let inp=document.createElement('input');inp.type='radio';inp.name='answer';inp.checked=answers[idx]===i;inp.disabled=submitted;inp.onchange=()=>{answers[idx]=i;renderPalette()};let span=document.createElement('span');span.textContent=String.fromCharCode(65+i)+'. '+op;lab.append(inp,span);$('options').append(lab)});
+ $('prev').disabled=idx===0||submitted;$('next').disabled=idx===active.length-1||submitted;$('mark').disabled=submitted;$('submit').disabled=submitted;renderPalette();
+}
+function renderPalette(){$('palette').innerHTML='';active.forEach((q,i)=>{let b=document.createElement('button');b.textContent=i+1;if(answers[i]!==undefined)b.classList.add('done');if(i===idx)b.classList.add('current');b.title=marked[i]?'Marked for review':answers[i]!==undefined?'Answered':'Unanswered';b.onclick=()=>{if(!submitted){idx=i;render()}};$('palette').append(b)})}
+function stopTimer(){if(tick){clearInterval(tick);tick=null}}
+function showResult(){submitted=true;stopTimer();let correct=0;active.forEach((q,i)=>{if(answers[i]===q.a)correct++});let out=`<div class="result"><b>Test submitted</b><br>Score: ${correct} / ${active.length}<br>Correct: ${correct} · Incorrect: ${Object.keys(answers).length-correct} · Unanswered: ${active.length-Object.keys(answers).length}<hr><b>Answer review</b><br>`;
+ active.forEach((q,i)=>{out+=`<p><b>Q${i+1}.</b> ${langText(q)}<br>Your answer: ${answers[i]===undefined?'Not answered':q.o[answers[i]]}<br>Correct answer: ${q.o[q.a]}<br><small>${q.why}</small></p>`});$('result').innerHTML=out+'</div>';render()}
+$('startTest').onclick=()=>{stopTimer();let n=+$('count').value;active=qs.slice(0,n);idx=0;answers={};marked={};submitted=false;seconds=+$('minutes').value*60;$('result').innerHTML='';$('testArea').style.display='block';render();updateTimer();tick=setInterval(()=>{seconds--;updateTimer();if(seconds<=0)showResult()},1000);$('testArea').scrollIntoView({behavior:'smooth',block:'start'})};
+function updateTimer(){$('timer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
+$('prev').onclick=()=>{if(idx>0){idx--;render()}};$('next').onclick=()=>{if(idx<active.length-1){idx++;render()}};$('mark').onclick=()=>{marked[idx]=!marked[idx];renderPalette()};$('submit').onclick=()=>{if(confirm('Submit this test now?'))showResult()};$('resetTest').onclick=()=>{stopTimer();$('testArea').style.display='none';active=[];answers={};marked={};submitted=false;$('result').innerHTML=''};
+</script>
+</body></html>
